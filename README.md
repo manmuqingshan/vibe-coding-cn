@@ -101,6 +101,8 @@
 - [**提示词库，直接复制粘贴即可使用**](https://docs.google.com/spreadsheets/d/1ngoQOhJqdguwNAilCl1joNwTje7FWWN9WiI2bo5VhpU/edit?gid=2093180351#gid=2093180351&range=A1)
 - [**其他编程工具的系统提示词学习库**](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools)
 - [**Skills制作器（ ai 你下好之后让 ai 用这个仓库按照你的需求生成 Skills 即可）**](https://github.com/yusufkaraaslan/Skill_Seekers)
+- [**元提示词，生成提示词的提示词**](https://docs.google.com/spreadsheets/d/1ngoQOhJqdguwNAilCl1joNwTje7FWWN9WiI2bo5VhpU/edit?gid=1770874220#gid=1770874220)
+- [**augment提示词优化器**](https://app.augmentcode.com/)，这个提示词优化是真的好用，强烈强烈强烈强烈强烈强烈强烈强烈强烈强烈强烈强烈推荐
 
 ---
 
