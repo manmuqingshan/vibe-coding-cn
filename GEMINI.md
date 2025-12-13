@@ -72,12 +72,12 @@
 │   │   └── utils/               # 实用工具函数。
 │   ├── database/                # 数据库相关代码。
 │   └── external/                # 外部工具、个人配置或实验性代码。
-│       ├── AGENTS.md            # AI Agent 相关的外部文档。
 │       ├── prompts-library/     # 提示词库管理工具 (Excel-Markdown 互转)。
 │       │   ├── main.py          # 提示词库管理工具主程序。
 │       │   ├── requirements.txt # 工具依赖。
 │       │   ├── prompt_excel/    # Excel 格式提示词。
-│       │   └── prompt_docs/     # Markdown 格式提示词文档。
+│       │   ├── prompt_docs/     # Markdown 格式提示词文档。
+│       │   └── ... (其他 prompts-library 内部文件)
 │       ├── my-nvim/             # 个人 Neovim 配置。
 │       └── XHS-image-to-PDF-conversion/ # 小红书图片转 PDF 工具。
 │

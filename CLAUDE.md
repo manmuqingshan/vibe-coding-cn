@@ -4,14 +4,15 @@ This file provides guidance to Claude series models when working with code in th
 
 ## Repository Overview
 
-This is the **Vibe Coding CN** repository, a workflow, toolset, and knowledge base for advanced AI-assisted programming. The project's core assets are its extensive `prompts` and `skills` libraries.
+This is the **Vibe Coding CN** repository, a workflow, toolset, and knowledge base for advanced AI-assisted programming. The project's core assets are its
+ extensive `prompts` and `skills` libraries.
 
 ## Key Commands
 
 ### Prompt Library Management
 ```bash
 # Enter the library directory
-cd prompts/prompts-library
+cd libs/external/prompts-library
 
 # Run the interactive conversion tool
 python3 main.py
@@ -31,9 +32,10 @@ bash backups/一键备份.sh
 ### Core Directories
 - **`prompts/`**: The core asset. A massive, well-organized library of prompts.
   - `coding_prompts/`, `system_prompts/`, `user_prompts/`
-- **`skills/`**: A modular library of skills for the AI, providing domain-specific knowledge for various tools like `ccxt`, `postgresql`, `telegram-dev`, etc.
+- **`skills/`**: A modular library of skills for the AI, providing domain-specific knowledge for various tools like `ccxt`, `postgresql`, `telegram-dev`, 
+etc.
 - **`documents/`**: The project's knowledge base, containing methodology, principles, and guides.
-- **`prompts/prompts-library/`**: A Python-based tool for converting prompts between Excel and Markdown formats.
+- **`libs/external/prompts-library/`**: A Python-based tool for converting prompts between Excel and Markdown formats.
 - **`backups/`**: Scripts for project backups.
 - **`libs/`**: Skeleton for shared Python library code.
 
