@@ -1,109 +1,88 @@
 ---
-name: my-skill
-description: [Domain] development and operations including [capability 1], [capability 2], [capability 3]. Use when working with [domain], implementing [solutions], or troubleshooting [issues].
+name: {{skill_name}}
+description: "[Domain] end-to-end capability: includes [capability 1], [capability 2], [capability 3]. Use when [decidable triggers]."
 ---
 
-# [Skill Name] Skill
+# {{skill_name}} Skill
 
-Comprehensive assistance with [domain] development, generated from official documentation.
+Production-grade skill for [domain]: extract rules, patterns, and reproducible examples from source material (avoid documentation dumps).
 
 ## When to Use This Skill
 
-This skill should be triggered when:
-- Working with [domain/technology]
-- Asking about [domain] features or APIs
-- Implementing [domain] solutions
-- Debugging [domain] code
-- Learning [domain] best practices
+Trigger when any of these applies:
+- You are designing/implementing/debugging [domain/tech]
+- You need to turn requirements into concrete commands/code/configs
+- You need common pitfalls, boundaries, and acceptance criteria
+
+## Not For / Boundaries
+
+- What this skill will not do (prevents misfires and over-promising)
+- Required inputs; ask 1-3 questions if missing
 
 ## Quick Reference
 
 ### Common Patterns
 
-**Pattern 1:** [Name]
-```[language]
-[code example]
+**Pattern 1:** one-line explanation
+```text
+[command/snippet you can paste and run]
 ```
 
-**Pattern 2:** [Name]
-```[language]
-[code example]
+**Pattern 2:**
+```text
+[command/snippet you can paste and run]
 ```
 
-**Pattern 3:** [Name]
-```[language]
-[code example]
-```
+## Rules & Constraints
 
-### Example Code Patterns
+- MUST: non-negotiable rules (security boundaries, defaults, acceptance)
+- SHOULD: strong recommendations (best practices, performance habits)
+- NEVER: explicit prohibitions (dangerous ops, inventing facts)
 
-**Example 1** ([language]):
-```[language]
-// [Description of what this example demonstrates]
-[complete working code]
-```
+## Examples
 
-**Example 2** ([language]):
-```[language]
-// [Description]
-[complete working code]
-```
+### Example 1
+- Input:
+- Steps:
+- Expected output / acceptance:
 
-## [Domain-Specific Section 1]
+### Example 2
 
-### [Subsection]
+### Example 3
 
-[Content]
+## FAQ
 
-### [Subsection]
+- Q: ...
+  - A: ...
 
-[Content]
+## Troubleshooting
 
-## [Domain-Specific Section 2]
+- Symptom -> Likely causes -> Diagnosis -> Fix
 
-### [Subsection]
+## References
 
-[Content]
+- `references/index.md`: navigation
+- `references/getting_started.md`: onboarding and vocabulary
+- `references/api.md`: API/CLI/config reference (if applicable)
+- `references/examples.md`: long examples and extra use cases
+- `references/troubleshooting.md`: edge cases and failure modes
 
-## Reference Files
+## Maintenance
 
-This skill includes comprehensive documentation in `references/`:
+- Sources: docs/repos/specs (do not invent)
+- Last updated: YYYY-MM-DD
+- Known limits: what is explicitly out of scope
 
-- **getting_started.md** - Installation, setup, first steps
-- **api.md** - Complete API reference
-- **examples.md** - Code examples by use case
-- **troubleshooting.md** - Common issues and solutions
+## Quality Gate
 
-Use `view` to read specific reference files when detailed information is needed.
+Minimum checks before shipping (see meta-skill `claude-skills` for the full version):
 
-## Working with This Skill
-
-### For Beginners
-Start with the getting_started reference file for foundational concepts.
-
-### For Specific Features
-Use the api reference file for detailed function/method information.
-
-### For Code Examples
-The examples reference file contains patterns organized by use case.
-
-## Resources
-
-### references/
-Organized documentation extracted from official sources:
-- Detailed explanations
-- Code examples with language annotations
-- Links to original documentation
-
-### scripts/
-Helper scripts for common automation tasks.
-
-### assets/
-Templates, boilerplate, and example configurations.
-
-## Notes
-
-- This skill was generated from official documentation
-- Reference files preserve structure from source docs
-- Code examples include language detection for syntax highlighting
-- Quick reference patterns are extracted from common usage
+1. `description` is decidable ("what + when") and includes trigger keywords
+2. Has "When to Use This Skill" with decidable triggers
+3. Has "Not For / Boundaries" to reduce misfires
+4. Quick Reference is <= 20 patterns and each is directly usable
+5. Has >= 3 reproducible examples (input -> steps -> acceptance)
+6. Long content is in `references/` with a navigable `references/index.md`
+7. Uncertain claims include a verification path (no bluffing)
+8. No documentation dumps in Quick Reference
+9. Reads like an operator's manual, not a knowledge dump

@@ -1,416 +1,243 @@
 ---
 name: claude-skills
-description: Meta-skill for creating, optimizing, and managing Claude Skills. Use when building new skills from documentation, converting domain expertise into AI capabilities, structuring skill files, or learning skill development best practices. This is the foundational skill that generates other skills.
+description: "Claude Skills meta-skill: extract domain material (docs/APIs/code/specs) into a reusable Skill (SKILL.md + references/scripts/assets), and refactor existing Skills for clarity, activation reliability, and quality gates."
 ---
 
 # Claude Skills Meta-Skill
 
-The definitive guide to creating production-grade Claude Skills. This meta-skill teaches Claude how to transform any domain knowledge into structured, reusable AI capabilities.
+Turn scattered domain material into a Skill that is reusable, maintainable, and reliably activatable:
+- `SKILL.md` as the entrypoint (triggers, constraints, patterns, examples)
+- `references/` for long-form evidence and navigation
+- optional `scripts/` and `assets/` for scaffolding and templates
 
 ## When to Use This Skill
 
-This skill should be triggered when:
-- Creating a new Claude Skill from scratch
-- Converting documentation, APIs, or domain knowledge into a Skill
-- Optimizing or restructuring existing Skills
-- Learning Skill architecture patterns and best practices
-- Debugging or troubleshooting Skill behavior
-- Understanding YAML frontmatter and Skill metadata
-- Building multi-file Skills with references, scripts, and assets
+Trigger this meta-skill when you need to:
+- Create a new Skill from scratch from docs/specs/repos
+- Refactor an existing Skill (too long, unclear, inconsistent, misfires)
+- Design reliable activation (frontmatter + triggers + boundaries)
+- Extract a clean Quick Reference from large material
+- Split long content into navigable `references/`
+- Add a quality gate and a validator
+
+## Not For / Boundaries
+
+This meta-skill is NOT:
+- A domain Skill by itself (it builds domain Skills)
+- A license to invent external facts (if the material does not prove it, say so and add a verification path)
+- A substitute for required inputs (if inputs are missing, ask 1-3 questions before proceeding)
 
 ## Quick Reference
 
-### Skill Directory Structure
+### Deliverables (What You Must Produce)
+
+Your output MUST include:
+1. A concrete directory layout (typically `skills/<skill-name>/`)
+2. An actionable `SKILL.md` with decidable triggers, boundaries, and reproducible examples
+3. Long-form docs moved to `references/` with a `references/index.md`
+4. A pre-delivery checklist (Quality Gate)
+
+### Recommended Layout (Minimal -> Full)
 
 ```
 skill-name/
-├── SKILL.md              # Required: Main instructions with YAML frontmatter
-├── references/           # Optional: Detailed documentation files
-│   ├── index.md          # Navigation index for references
-│   ├── api.md            # API documentation
-│   └── examples.md       # Code examples
-├── scripts/              # Optional: Helper scripts and automation
-│   └── setup.sh          # Setup/installation scripts
-└── assets/               # Optional: Templates, configs, media
-    └── templates/        # Boilerplate files
+|-- SKILL.md              # Required: entrypoint with YAML frontmatter
+|-- references/           # Optional: long-form docs/evidence/index
+|   `-- index.md          # Recommended: navigation index
+|-- scripts/              # Optional: helpers/automation
+`-- assets/               # Optional: templates/configs/static assets
 ```
 
-### YAML Frontmatter Specification
+The truly minimal version is just `SKILL.md` (you can add `references/` later).
+
+### YAML Frontmatter (Required)
 
 ```yaml
 ---
-name: skill-name                    # Required: lowercase, hyphens, unique
-description: Complete description   # Required: What it does + when to trigger
+name: skill-name
+description: "What it does + when to use (activation triggers)."
 ---
 ```
 
-### Production SKILL.md Template
+Frontmatter rules:
+- `name` MUST match `^[a-z][a-z0-9-]*$` and SHOULD match the directory name
+- `description` MUST be decidable (not "helps with X") and include concrete trigger keywords
+
+### Minimal `SKILL.md` Skeleton (Copy/Paste)
 
 ```markdown
 ---
 name: my-skill
-description: [Purpose] + [Trigger conditions]. Use when [specific scenarios].
+description: "[Domain] capability: includes [capability 1], [capability 2]. Use when [decidable triggers]."
 ---
 
-# [Skill Name] Skill
+# my-skill Skill
 
-[One-paragraph overview]
+One sentence that states the boundary and the deliverable.
 
 ## When to Use This Skill
 
-This skill should be triggered when:
-- [Trigger 1]
+Trigger when any of these applies:
+- [Trigger 1: concrete task/keyword]
 - [Trigger 2]
 - [Trigger 3]
+
+## Not For / Boundaries
+
+- What this skill will not do (prevents misfires and over-promising)
+- Required inputs; ask 1-3 questions if missing
 
 ## Quick Reference
 
 ### Common Patterns
 
-**Pattern 1:** [Name]
-```[language]
-[code]
+**Pattern 1:** one-line explanation
+```text
+[command/snippet you can paste and run]
 ```
 
-### Example Code Patterns
+## Examples
 
-**Example 1** ([language]):
-```[language]
-[complete working example]
+### Example 1
+- Input:
+- Steps:
+- Expected output / acceptance:
+
+### Example 2
+
+### Example 3
+
+## References
+
+- `references/index.md`: navigation
+- `references/...`: long-form docs split by topic
+
+## Maintenance
+
+- Sources: docs/repos/specs (do not invent)
+- Last updated: YYYY-MM-DD
+- Known limits: what is explicitly out of scope
 ```
 
-## Reference Files
+### Authoring Rules (Non-negotiable)
 
-This skill includes documentation in `references/`:
-- **[file.md]** - [Description]
+1. Quick Reference is for short, directly usable patterns
+   - Keep it <= 20 patterns when possible.
+   - Anything that needs paragraphs of explanation goes to `references/`.
+2. Activation must be decidable
+   - Frontmatter `description` should say "what + when" with concrete keywords.
+   - "When to Use" must list specific tasks/inputs/goals, not vague help text.
+   - "Not For / Boundaries" is mandatory for reliability.
+3. No bluffing on external details
+   - If the material does not prove it, say so and include a verification path.
 
-## Working with This Skill
+### Workflow (Material -> Skill)
 
-### For Beginners
-[Getting started guidance]
+Do not skip steps:
+1. Scope: write MUST/SHOULD/NEVER (three sentences total is fine)
+2. Extract patterns: pick 10-20 high-frequency patterns (commands/snippets/flows)
+3. Add examples: >= 3 end-to-end examples (input -> steps -> acceptance)
+4. Define boundaries: what is out-of-scope + required inputs
+5. Split references: move long text into `references/` + write `references/index.md`
+6. Apply the gate: run the checklist and the validator
 
-### For Specific Features
-[How to find detailed information]
+### Quality Gate (Pre-delivery Checklist)
 
-## Resources
+Minimum checks (see `references/quality-checklist.md` for the full version):
+1. `name` matches `^[a-z][a-z0-9-]*$` and matches the directory name
+2. `description` states "what + when" with concrete trigger keywords
+3. Has "When to Use This Skill" with decidable triggers
+4. Has "Not For / Boundaries" to reduce misfires
+5. Quick Reference is <= 20 patterns and each is directly usable
+6. Has >= 3 reproducible examples
+7. Long content is in `references/` and `references/index.md` is navigable
+8. Uncertain claims include a verification path (no bluffing)
+9. Reads like an operator's manual, not a documentation dump
 
-### references/
-[Description]
-
-### scripts/
-[Description]
-
-### assets/
-[Description]
-```
-
----
-
-## Core Concepts
-
-### What is a Skill?
-
-**A Skill is a folder containing instructions, scripts, and resources that Claude loads dynamically to improve performance on specialized tasks.**
-
-Skills teach Claude to:
-- Apply domain-specific knowledge consistently
-- Follow organization-specific workflows
-- Work with specific APIs, file formats, or tools
-- Automate complex multi-step processes
-
-### Skill Activation Triggers
-
-Skills activate based on:
-- **Explicit mention**: "Use the [skill-name] skill to..."
-- **Description matching**: Task matches skill's description keywords
-- **Context relevance**: Task domain aligns with skill's purpose
-
----
-
-## Creating Production-Grade Skills
-
-### Step 1: Define Scope
-
-Answer before writing:
-1. What specific problem does this skill solve?
-2. What triggers should activate this skill?
-3. What are the boundaries (what it should NOT do)?
-
-### Step 2: Gather Source Material
-
-Collect:
-- Official documentation
-- API references
-- Code examples and patterns
-- Common errors and solutions
-
-### Step 3: Structure the SKILL.md
-
-**Critical sections:**
-1. YAML frontmatter with comprehensive description
-2. "When to Use This Skill" with specific triggers
-3. "Quick Reference" with common patterns
-4. Code examples that are complete and working
-5. Reference file pointers
-
-### Step 4: Create Reference Files
-
-**references/index.md:**
-```markdown
-# [Skill Name] Documentation Index
-
-## Quick Links
-- Getting Started → `getting_started.md`
-- API Reference → `api.md`
-- Examples → `examples.md`
-```
-
-### Step 5: Add Scripts and Assets
+Validate locally:
 
 ```bash
-# scripts/setup.sh
-#!/bin/bash
-echo "Setting up [skill-name]..."
+# From repo root (basic validation)
+./skills/claude-skills/scripts/validate-skill.sh skills/<skill-name>
+
+# From repo root (strict validation)
+./skills/claude-skills/scripts/validate-skill.sh skills/<skill-name> --strict
+
+# From skills/claude-skills/ (basic validation)
+./scripts/validate-skill.sh ../<skill-name>
+
+# From skills/claude-skills/ (strict validation)
+./scripts/validate-skill.sh ../<skill-name> --strict
 ```
 
----
+### Tools & Templates
 
-## Best Practices
-
-### Description Writing
-
-```yaml
-# ❌ Too vague
-description: Helps with databases
-
-# ✅ Comprehensive
-description: PostgreSQL database development including SQL queries, schema design, performance optimization. Use when working with PostgreSQL, writing SQL, or managing databases.
-```
-
-### Trigger Conditions
-
-```markdown
-# ❌ Vague
-- Working with code
-
-# ✅ Specific
-- Writing PostgreSQL queries or stored procedures
-- Designing database schemas or indexes
-- Optimizing slow queries
-```
-
-### Code Examples
-
-```markdown
-# ❌ Incomplete
-```sql
-SELECT * FROM users
-```
-
-# ✅ Complete with context
-**Example: Paginated query with filtering**
-```sql
-SELECT id, username, email, created_at
-FROM users
-WHERE status = 'active'
-ORDER BY created_at DESC
-LIMIT 20 OFFSET 0;
-```
-```
-
----
-
-## Skill Patterns by Category
-
-### API/Library Skills
-
-```markdown
-## Quick Reference
-
-### Authentication
-```python
-client = APIClient(api_key="your-key")
-```
-
-### Common Operations
-```python
-# Create
-resource = client.create(name="example")
-
-# List
-resources = client.list(limit=10)
-
-# Delete
-client.delete(resource_id)
-```
-
-### Error Handling
-```python
-try:
-    result = client.operation()
-except APIError as e:
-    print(f"Error {e.code}: {e.message}")
-```
-```
-
-### Framework Skills
-
-```markdown
-## Project Structure
-```
-my-project/
-├── src/
-├── tests/
-└── config/
-```
-
-## Common Commands
-```bash
-framework init my-project
-framework dev
-framework build
-```
-```
-
-### Domain Knowledge Skills
-
-```markdown
-## Core Concepts
-
-### Concept 1
-[Explanation]
-
-### Concept 2
-[Explanation]
-
-## Decision Framework
-
-When to use Approach A:
-- [Condition 1]
-- [Condition 2]
-
-When to use Approach B:
-- [Condition 1]
-- [Condition 2]
-```
-
----
-
-## Generating Skills from Source Material
-
-### Transformation Process
-
-```
-Source Material
-      ↓
-Extract: concepts, patterns, examples, edge cases, errors
-      ↓
-Structure: YAML → When to Use → Quick Reference → Details
-      ↓
-Create: references/index.md + categorized docs
-      ↓
-Production-Grade Skill
-```
-
-### Generation Prompt
-
-When creating a skill from source material:
-
-```
-Create a production-grade Claude Skill:
-
-1. Analyze source material
-2. Extract core concepts and patterns
-3. Create SKILL.md with:
-   - Comprehensive description (purpose + triggers)
-   - Specific "When to Use" conditions
-   - Quick Reference with code patterns
-   - Complete working examples
-4. Create references/index.md
-5. Organize detailed docs in references/
-```
-
----
-
-## Platform Integration
-
-### Claude Code
+Generate a new Skill skeleton:
 
 ```bash
-# Add marketplace
-/plugin marketplace add anthropics/skills
+# From repo root (generate into ./skills/)
+./skills/claude-skills/scripts/create-skill.sh my-skill --full --output skills
 
-# Install
-/plugin install example-skills@anthropic-agent-skills
+# From skills/claude-skills/ (generate into ../ i.e. ./skills/)
+./scripts/create-skill.sh my-skill --full --output ..
 
-# Use
-"Use the PDF skill to extract tables from report.pdf"
+# Minimal skeleton
+./skills/claude-skills/scripts/create-skill.sh my-skill --minimal --output skills
 ```
 
-### Claude.ai
+Templates:
+- `assets/template-minimal.md`
+- `assets/template-complete.md`
 
-1. Navigate to Claude.ai (paid plan)
-2. Upload custom skill folder
-3. Reference in conversations
+## Examples
 
-### Claude API
+### Example 1: Create a Skill from Docs
 
-See: https://docs.claude.com/en/api/skills-guide
+- Input: an official doc/spec + 2-3 real code samples + common failure modes
+- Steps:
+  1. Run `create-skill.sh` to scaffold `skills/<skill-name>/`
+  2. Write frontmatter `description` as "what + when"
+  3. Extract 10-20 high-frequency patterns into Quick Reference
+  4. Add >= 3 end-to-end examples with acceptance criteria
+  5. Put long content into `references/` and wire `references/index.md`
+  6. Run `validate-skill.sh --strict` and iterate
 
----
+### Example 2: Refactor a "Doc Dump" Skill
 
-## Troubleshooting
+- Input: an existing `SKILL.md` with long pasted documentation
+- Steps:
+  1. Identify which parts are patterns vs. long-form explanation
+  2. Move long-form text into `references/` (split by topic)
+  3. Rewrite Quick Reference as short copy/paste patterns
+  4. Add or fix Examples until they are reproducible
+  5. Add "Not For / Boundaries" to reduce misfires
 
-### Skill Not Activating
+### Example 3: Validate and Gate a Skill
 
-1. Check `description` includes trigger keywords
-2. Verify `name` is lowercase with hyphens
-3. Ensure valid YAML (no tabs)
-4. Try explicit: "Use the [skill-name] skill to..."
+- Input: `skills/<skill-name>/`
+- Steps:
+  1. Run `validate-skill.sh` (non-strict) to get warnings
+  2. Fix frontmatter/name mismatches and missing sections
+  3. Run `validate-skill.sh --strict` to enforce the spec
+  4. Run the scoring rubric in `references/quality-checklist.md` before shipping
 
-### Inconsistent Behavior
+## References
 
-1. Add more specific trigger conditions
-2. Include more code examples
-3. Make instructions unambiguous
-4. Add explicit constraints
+Local docs:
+- `references/index.md`
+- `references/skill-spec.md`
+- `references/quality-checklist.md`
+- `references/anti-patterns.md`
+- `references/README.md` (upstream official reference)
 
----
+External (official):
+- https://support.claude.com/en/articles/12512176-what-are-skills
+- https://support.claude.com/en/articles/12512180-using-skills-in-claude
+- https://support.claude.com/en/articles/12512198-creating-custom-skills
+- https://docs.claude.com/en/api/skills-guide
 
-## Reference Files
+## Maintenance
 
-This skill includes documentation in `references/`:
-
-- **README.md** - Official Anthropic Skills repository documentation
-- **index.md** - Documentation index and quick links
-
-## Working with This Skill
-
-### For Creating New Skills
-Follow the 5-step process in "Creating Production-Grade Skills"
-
-### For Optimizing Existing Skills
-Review "Best Practices" and compare against your skill
-
-### For Understanding Architecture
-Read "Core Concepts" for foundational understanding
-
-## Resources
-
-### references/
-- Official Anthropic documentation
-- Navigation index
-
-### scripts/
-- `create-skill.sh` - Quick skill directory generator
-
-### assets/
-- `template-minimal.md` - Minimal template
-- `template-complete.md` - Full production template
-
-## Notes
-
-- Skills are portable across Claude Code, Claude.ai, and API
-- The `description` field is critical for reliable activation
-- Code examples should be complete and immediately usable
-- This skill generates other production-grade skills
+- Sources: local spec files in `skills/claude-skills/references/` + upstream official docs in `references/README.md`
+- Last updated: 2025-12-14
+- Known limits: `validate-skill.sh` is heuristic; strict mode assumes the recommended section headings

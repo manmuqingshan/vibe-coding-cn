@@ -1,27 +1,40 @@
-# 🔧 通用功能模块 (Common)
+# 🔧 libs/common：通用模块
 
-存放项目内部共享的通用代码，包括数据模型和工具函数。
+`libs/common/` 放的是项目内部可复用的“胶水代码”：**小而稳、低耦合、可替换**。这里的目标不是堆功能，而是为仓库提供少量可靠的基础能力。
 
 ## 目录结构
 
 ```
-common/
+libs/common/
+├── README.md
 ├── __init__.py
-├── models/          # 数据模型定义
+├── models/                 # 预留：数据模型（当前仅占位）
 │   └── __init__.py
-└── utils/           # 工具函数
-    └── backups/     # 备份工具
+└── utils/
+    └── backups/            # 基于 .gitignore 的快速备份工具
+        ├── README.md
+        ├── 快速备份.py
+        └── 一键备份.sh
 ```
 
-## 子模块
+## 现有内容
 
-- `models/` - Pydantic 模型、数据类等
-- `utils/` - 文件处理、格式转换等工具函数
-- `utils/backups/` - 备份相关工具
+- `utils/backups/`：快速备份工具（当前与仓库根目录 [`backups/`](../../backups/) 内容一致，用于避免脚本散落各处）
 
-## 使用
+## 约束与约定
 
-```python
-from libs.common.models import YourModel
-from libs.common.utils import your_function
+1. **不放业务逻辑**：`common/` 只提供基础能力与工具
+2. **接口要稳**：一旦被引用，就把它当作公开 API 对待
+3. **可审计输出**：脚本/工具的输出要可复盘（明确输入、输出路径、失败原因）
+4. **新增即文档**：新增模块/目录必须同步更新本 README 与 `libs/README.md`
+
+## 使用方式（当前推荐）
+
+本目录的内容目前主要以“脚本/工具”形式存在，推荐直接运行：
+
+```bash
+# 备份当前仓库（建议优先使用根目录 backups/ 入口）
+python3 backups/快速备份.py
 ```
+
+更多参数与说明见：[`../../backups/README.md`](../../backups/README.md)。

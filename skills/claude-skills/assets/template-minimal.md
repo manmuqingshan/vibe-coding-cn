@@ -1,37 +1,50 @@
 ---
-name: my-skill
-description: [Domain] assistance including [key capability]. Use when [trigger condition].
+name: {{skill_name}}
+description: "[Domain] capability: includes [key capability]. Use when [decidable triggers]."
 ---
 
-# [Skill Name] Skill
+# {{skill_name}} Skill
 
-[One-sentence overview of what this skill does]
+One sentence that states the boundary and the deliverable.
 
 ## When to Use This Skill
 
-This skill should be triggered when:
-- [Trigger 1]
+Trigger when any of these applies:
+- [Trigger 1: concrete task/keyword]
 - [Trigger 2]
 - [Trigger 3]
+
+## Not For / Boundaries
+
+- What this skill will not do (prevents misfires and over-promising)
+- Required inputs; ask 1-3 questions if missing
 
 ## Quick Reference
 
 ### Common Patterns
 
-**Pattern 1:**
-```[language]
-[code]
+**Pattern 1:** one-line explanation
+```text
+[command/snippet you can paste and run]
 ```
 
-**Pattern 2:**
-```[language]
-[code]
-```
+## Examples
 
-## Resources
+### Example 1
+- Input:
+- Steps:
+- Expected output / acceptance:
 
-### references/
-[Documentation files if any]
+### Example 2
 
-### scripts/
-[Helper scripts if any]
+### Example 3
+
+## References
+
+- `references/index.md`: navigation
+- `references/...`: long-form docs split by topic
+
+## Maintenance
+
+- Sources: docs/repos/specs (do not invent)
+- Last updated: YYYY-MM-DD

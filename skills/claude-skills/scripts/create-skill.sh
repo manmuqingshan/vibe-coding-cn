@@ -1,190 +1,181 @@
-#!/bin/bash
-#
-# create-skill.sh - Production-grade Skill directory generator
-#
-# Usage: ./create-skill.sh <skill-name> [--minimal]
-#
-# Examples:
-#   ./create-skill.sh postgresql
-#   ./create-skill.sh my-api --minimal
-#
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-SKILL_NAME=$1
-MINIMAL=$2
+# ==================== Help ====================
 
-if [ -z "$SKILL_NAME" ]; then
-    echo "Usage: ./create-skill.sh <skill-name> [--minimal]"
-    echo ""
-    echo "Examples:"
-    echo "  ./create-skill.sh postgresql"
-    echo "  ./create-skill.sh my-api --minimal"
-    exit 1
+usage() {
+  cat <<'EOF'
+Usage:
+  create-skill.sh <skill-name> [--minimal|--full] [--output <dir>] [--force]
+
+Notes:
+  - <skill-name> MUST be lowercase, start with a letter, and only contain letters, digits, and hyphens
+  - Default mode: --full
+  - Default output: current directory (creates ./<skill-name>/)
+
+Examples:
+  ./skills/claude-skills/scripts/create-skill.sh postgresql --full --output skills
+  ./skills/claude-skills/scripts/create-skill.sh my-api --minimal
+EOF
+}
+
+die() {
+  echo "Error: $*" >&2
+  exit 1
+}
+
+# ==================== Arg Parsing ====================
+
+skill_name=""
+mode="full"
+output_dir="."
+force=0
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --minimal)
+      mode="minimal"
+      shift
+      ;;
+    --full)
+      mode="full"
+      shift
+      ;;
+    -o|--output)
+      [[ $# -ge 2 ]] || die "--output requires a directory argument"
+      output_dir="$2"
+      shift 2
+      ;;
+    -f|--force)
+      force=1
+      shift
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      die "Unknown argument: $1 (use --help)"
+      ;;
+    *)
+      if [[ -z "$skill_name" ]]; then
+        skill_name="$1"
+        shift
+      else
+        die "Extra argument: $1 (only one <skill-name> is allowed)"
+      fi
+      ;;
+  esac
+done
+
+[[ -n "$skill_name" ]] || { usage; exit 1; }
+
+if [[ ! "$skill_name" =~ ^[a-z][a-z0-9-]*$ ]]; then
+  die "skill-name must be lowercase, start with a letter, and only contain letters/digits/hyphens (e.g. my-skill-name)"
 fi
 
-# Validate skill name (lowercase, hyphens only)
-if [[ ! "$SKILL_NAME" =~ ^[a-z][a-z0-9-]*$ ]]; then
-    echo "Error: Skill name must be lowercase, start with letter, use hyphens"
-    echo "Example: my-skill-name"
-    exit 1
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+assets_dir="${script_dir}/../assets"
+
+template_path=""
+case "$mode" in
+  minimal) template_path="${assets_dir}/template-minimal.md" ;;
+  full) template_path="${assets_dir}/template-complete.md" ;;
+  *) die "Internal error: unknown mode=$mode" ;;
+esac
+
+[[ -f "$template_path" ]] || die "Template not found: $template_path"
+
+mkdir -p "$output_dir"
+
+target_dir="${output_dir%/}/${skill_name}"
+
+if [[ -e "$target_dir" && "$force" -ne 1 ]]; then
+  die "Target already exists: $target_dir (use --force to overwrite)"
 fi
 
-echo "Creating skill: $SKILL_NAME"
+mkdir -p "$target_dir"/{assets,scripts,references}
 
-# Create directory structure
-mkdir -p "$SKILL_NAME"/{assets,scripts,references}
+# ==================== Write Files ====================
 
-# Create references/index.md
-cat > "$SKILL_NAME/references/index.md" << 'EOF'
-# Documentation Index
+render_template() {
+  local src="$1"
+  local dest="$2"
+  sed "s/{{skill_name}}/${skill_name}/g" "$src" > "$dest"
+}
 
-## Categories
+render_template "$template_path" "$target_dir/SKILL.md"
 
-### Getting Started
-- **getting_started.md** - Installation and setup
-
-### API Reference
-- **api.md** - Complete API documentation
-
-### Examples
-- **examples.md** - Code examples by use case
+cat > "$target_dir/references/index.md" <<EOF
+# ${skill_name} Reference Index
 
 ## Quick Links
 
-- Installation → `getting_started.md`
-- API Reference → `api.md`
-- Examples → `examples.md`
-EOF
-
-if [ "$MINIMAL" == "--minimal" ]; then
-    # Minimal template
-    cat > "$SKILL_NAME/SKILL.md" << EOF
----
-name: $SKILL_NAME
-description: [Domain] assistance including [key capability]. Use when [trigger condition].
----
-
-# ${SKILL_NAME^} Skill
-
-[One-sentence overview]
-
-## When to Use This Skill
-
-This skill should be triggered when:
-- [Trigger 1]
-- [Trigger 2]
-- [Trigger 3]
-
-## Quick Reference
-
-### Common Patterns
-
-**Pattern 1:**
-\`\`\`
-[code]
-\`\`\`
-
-## Resources
-
-### references/
-Documentation files
-
-### scripts/
-Helper scripts
-EOF
-else
-    # Full production template
-    cat > "$SKILL_NAME/SKILL.md" << EOF
----
-name: $SKILL_NAME
-description: [Domain] development including [capability 1], [capability 2]. Use when working with [domain], implementing solutions, or troubleshooting issues.
----
-
-# ${SKILL_NAME^} Skill
-
-Comprehensive assistance with [domain] development.
-
-## When to Use This Skill
-
-This skill should be triggered when:
-- Working with [domain/technology]
-- Asking about [domain] features or APIs
-- Implementing [domain] solutions
-- Debugging [domain] code
-- Learning [domain] best practices
-
-## Quick Reference
-
-### Common Patterns
-
-**Pattern 1:** [Name]
-\`\`\`
-[code example]
-\`\`\`
-
-**Pattern 2:** [Name]
-\`\`\`
-[code example]
-\`\`\`
-
-### Example Code Patterns
-
-**Example 1:**
-\`\`\`
-[complete working code]
-\`\`\`
-
-## Reference Files
-
-This skill includes documentation in \`references/\`:
-
-- **index.md** - Documentation navigation
-- **getting_started.md** - Setup and basics
-- **api.md** - API reference
-- **examples.md** - Code examples
-
-## Working with This Skill
-
-### For Beginners
-Start with getting_started reference file.
-
-### For Specific Features
-Use api reference for detailed information.
-
-### For Code Examples
-See examples reference file.
-
-## Resources
-
-### references/
-Organized documentation from official sources.
-
-### scripts/
-Helper scripts for automation.
-
-### assets/
-Templates and configurations.
+- Getting started: \`getting_started.md\`
+- API/CLI/config: \`api.md\` (if applicable)
+- Examples: \`examples.md\`
+- Troubleshooting: \`troubleshooting.md\`
 
 ## Notes
 
-- Generated from official documentation
-- Code examples are complete and working
+- Put long-form content here: excerpts, evidence links, edge cases, FAQ
+- Keep \`SKILL.md\` Quick Reference short and directly usable
+EOF
+
+if [[ "$mode" == "full" ]]; then
+  cat > "$target_dir/references/getting_started.md" <<'EOF'
+# Getting Started & Vocabulary
+
+## Goals
+
+- Define the 10 most important terms in this domain
+- Provide the shortest path from zero to working
+EOF
+
+  cat > "$target_dir/references/api.md" <<'EOF'
+# API / CLI / Config Reference (If Applicable)
+
+## Suggested Structure
+
+- Organize by use case, not alphabetically
+- Key parameters: defaults, boundaries, common misuse
+- Common errors: message -> cause -> fix steps
+EOF
+
+  cat > "$target_dir/references/examples.md" <<'EOF'
+# Long Examples
+
+Put examples longer than ~20 lines here, split by use case:
+
+- Use case 1: ...
+- Use case 2: ...
+EOF
+
+  cat > "$target_dir/references/troubleshooting.md" <<'EOF'
+# Troubleshooting & Edge Cases
+
+Write as: symptom -> likely causes -> diagnosis -> fix.
 EOF
 fi
 
+# ==================== Summary ====================
+
 echo ""
-echo "✅ Created skill: $SKILL_NAME/"
+echo "OK: Skill generated: $target_dir/"
 echo ""
-echo "   $SKILL_NAME/"
-echo "   ├── SKILL.md"
-echo "   ├── assets/"
-echo "   ├── scripts/"
-echo "   └── references/"
-echo "       └── index.md"
+echo "Layout:"
+echo "  $target_dir/"
+echo "  |-- SKILL.md"
+echo "  |-- assets/"
+echo "  |-- scripts/"
+echo "  \\-- references/"
+echo "      \\-- index.md"
 echo ""
 echo "Next steps:"
-echo "  1. Edit $SKILL_NAME/SKILL.md"
-echo "  2. Add documentation to references/"
-echo "  3. Add helper scripts to scripts/"
-echo "  4. Add templates to assets/"
+echo "  1) Edit $target_dir/SKILL.md (triggers/boundaries/quick reference/examples)"
+echo "  2) Put long-form docs into $target_dir/references/ and update index.md"

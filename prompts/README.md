@@ -1,81 +1,83 @@
-# 💡 AI 提示词库 (Prompts Library)
+# 💡 AI 提示词库 (Prompts)
 
-`prompts/` 目录是本项目中 AI 提示词的核心资产，包含 **40+ 个**经过精心设计和分类的提示词，用于指导 AI 进行各种任务。
+`prompts/` 存放本仓库的提示词资产：用 **系统提示词** 约束 AI 的边界与品味，用 **任务提示词** 驱动「需求澄清 → 计划 → 执行 → 复盘」的开发流水线。
 
-## 目录结构
+## 推荐使用路径（从 0 到可控）
+
+1. **先定边界**：选择一个系统提示词版本（推荐 `v8` 或 `v10`）。
+2. **再跑流程**：在具体任务里按阶段选用 `coding_prompts/`（澄清 / 计划 / 执行 / 复盘）。
+3. **最后产品化**：当你在某领域反复做同类工作，把「提示词 + 资料」升级为 `skills/` 里的 Skill（更可复用、更稳定）。
+
+## 目录结构（以仓库真实目录为准）
 
 ```
 prompts/
-├── README.md                # 本文件
-├── coding_prompts/          # 编程与代码生成相关提示词（40+ 个）
-│   ├── index.md             # 提示词索引与版本矩阵
-│   ├── plan提示词.md         # 实施计划生成
-│   ├── 系统架构可视化生成Mermaid.md
+├── README.md
+├── coding_prompts/                 # 编程/研发提示词（当前 41 个 .md）
+│   ├── index.md                    # 自动生成的索引与版本矩阵（请勿手改）
+│   ├── 标准化流程.md
 │   ├── 项目上下文文档生成.md
+│   ├── 智能需求理解与研发导航引擎.md
 │   └── ...
-├── system_prompts/          # AI 系统级提示词（10 个版本）
-│   └── CLAUDE.md/
-│       ├── 1/ ~ 10/         # 不同版本的系统提示词
-│       └── ...
-└── user_prompts/            # 用户自定义提示词
+├── system_prompts/                 # 系统提示词（CLAUDE 多版本 + 其他收集）
+│   ├── CLAUDE.md/                  # 1~10 版本目录（v9 目前仅占位）
+│   │   ├── 1/CLAUDE.md
+│   │   ├── 2/CLAUDE.md
+│   │   ├── ...
+│   │   ├── 9/AGENTS.md             # v9 当前没有 CLAUDE.md
+│   │   └── 10/CLAUDE.md
+│   └── ...
+└── user_prompts/                   # 用户自用/一次性提示词
     ├── ASCII图生成.md
     ├── 数据管道.md
     └── 项目变量与工具统一维护.md
 ```
 
-## 各子目录详解
+## `system_prompts/`：系统级提示词（先把 AI 变“可控”）
 
-### `coding_prompts/` - 编程提示词集
+系统提示词用于定义 **工作模式、代码品味、输出格式、安全边界**。目录采用版本化结构：
 
-| 类别 | 示例提示词 | 用途 |
-|------|-----------|------|
-| 项目规划 | `plan提示词.md` | 生成详细实施计划 |
-| 架构设计 | `系统架构可视化生成Mermaid.md` | 架构分析与可视化 |
-| 文档生成 | `项目上下文文档生成.md`、`精华技术文档生成提示词.md` | 自动生成项目文档 |
-| 代码规范 | `标准项目目录结构.md`、`标准化流程.md` | 统一代码风格与结构 |
-| 需求分析 | `智能需求理解与研发导航引擎.md` | 需求澄清与任务分解 |
-| 深度思考 | `ultrathink` 系列 | 触发 AI 深度推理模式 |
+- 路径约定：`prompts/system_prompts/CLAUDE.md/<版本号>/CLAUDE.md`
+- 推荐版本：
+  - `v8`：综合版，适合通用 Vibe Coding
+  - `v10`：偏 Augment/上下文引擎的规范化约束
+- 注意：`v9` 目录目前仅占位（无 `CLAUDE.md`）
 
-**索引文件**: `index.md` 提供完整的提示词列表和快速跳转链接。
+## `coding_prompts/`：任务级提示词（把流程跑通）
 
-### `system_prompts/` - 系统级提示词
+`coding_prompts/` 面向「一次任务」：从需求澄清、计划拆解到交付与复盘。建议把它当作工作流脚本库：
 
-用于设定 AI 整体行为模式和思维框架，当前包含 **10 个版本**：
+- **入口级**（新会话/新项目必用）
+  - `项目上下文文档生成.md`：固化上下文，降低跨会话漂移
+  - `智能需求理解与研发导航引擎.md`：把模糊需求拆成可执行任务
+- **交付级**（保证输出可审计）
+  - `标准化流程.md`：把“先做什么、后做什么”写死，减少失控
+  - `系统架构可视化生成Mermaid.md`：把架构输出成可视化（图胜千言）
 
-| 版本 | 特点 |
-|------|------|
-| v1 | 开发者行为准则与工程规范 |
-| v2 | ultrathink 模式与架构可视化规范 |
-| v3 | 思维创作哲学与执行确认机制 |
-| v4 | Linus 级工程师服务认知架构 |
-| v5 | 顶级程序员思维框架与代码品味 |
-| v6 | 综合版本，整合所有最佳实践 |
-| v7 | 推理与规划智能体，专职复杂任务分解 |
-| v8 | 最新综合版，顶级程序员服务 Linus 级工程师 |
-| v9 | 简化版本（实验性） |
-| v10 | 最新版，加入 Augment 上下文引擎规范 |
+### 关于 `index.md`（重要）
 
-**推荐**: 新项目建议从 `v8` 或 `v10` 开始。
+[`coding_prompts/index.md`](./coding_prompts/index.md) 是自动生成的索引（包含版本矩阵与跳转链接），**不要手工编辑**。如果你批量增删/调整版本，建议通过工具链生成索引再同步。
 
-### `user_prompts/` - 用户自定义提示词
+## `user_prompts/`：个人工作台（不追求体系化）
 
-- `ASCII图生成.md` - 生成 ASCII 艺术图
-- `数据管道.md` - 数据处理流程设计
-- `项目变量与工具统一维护.md` - 项目配置管理
+放一些个人习惯、临时脚手架提示词，原则是 **能用、别烂、别污染主库**。
 
-## 快速使用
+## 快速使用（复制即用）
 
 ```bash
-# 查看某个提示词
-cat prompts/coding_prompts/plan提示词.md
+# 查看一个任务提示词
+sed -n '1,160p' prompts/coding_prompts/标准化流程.md
 
-# 使用 v8 版本的系统提示词
-cp prompts/system_prompts/CLAUDE.md/8/CLAUDE.md ./CLAUDE.md
+# 选定系统提示词版本（建议先备份你当前的 CLAUDE.md）
+cp prompts/system_prompts/CLAUDE.md/10/CLAUDE.md ./CLAUDE.md
 ```
+
+## 维护与批量管理（可选）
+
+如果你需要 Excel ↔ Markdown 的批量维护能力，仓库内置了第三方工具：`libs/external/prompts-library/`。建议把它视为“提示词资产的生产工具”，而把 `prompts/` 视为“日常开发的精选集”。
 
 ## 相关资源
 
-- [Google 表格提示词数据库](https://docs.google.com/spreadsheets/d/1ngoQOhJqdguwNAilCl1joNwTje7FWWN9WiI2bo5VhpU/edit?gid=2093180351#gid=2093180351&range=A1)
-- [元提示词](https://docs.google.com/spreadsheets/d/1ngoQOhJqdguwNAilCl1joNwTje7FWWN9WiI2bo5VhpU/edit?gid=1770874220#gid=1770874220)
-- [系统提示词收集仓库](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools)
-- [Skills 生成器](https://github.com/yusufkaraaslan/Skill_Seekers)
+- [`../skills/`](../skills/)：把高频领域能力沉淀为 Skills（更强复用）
+- [`../documents/`](../documents/)：方法论与最佳实践（提示词设计与工作流原则）
+- [`../libs/external/prompts-library/`](../libs/external/prompts-library/)：提示词 Excel ↔ Markdown 管理工具

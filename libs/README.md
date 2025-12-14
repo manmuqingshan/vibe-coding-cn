@@ -1,90 +1,67 @@
-# 📦 通用库与外部集成 (Libs)
+# 📦 通用库与外部集成 (libs)
 
-`libs/` 目录存放项目的通用库代码和外部集成模块，用于项目内部模块化和工具复用。
+`libs/` 用来放两类东西：
+
+1. **内部可复用的胶水代码**：小而稳、低耦合、可替换（`common/`）
+2. **第三方工具与外部集成**：尽量保持原样、只做最薄适配（`external/`）
+
+`database/` 预留未来的数据持久化层（当前仅占位）。
 
 ## 目录结构
 
 ```
 libs/
-├── README.md                # 本文件
-├── common/                  # 通用功能模块
+├── README.md
+├── common/
+│   ├── README.md
 │   ├── __init__.py
-│   ├── models/              # 数据模型定义
+│   ├── models/
 │   │   └── __init__.py
-│   └── utils/               # 工具函数
-│       └── backups/         # 备份工具
-├── database/                # 数据库相关模块（预留）
+│   └── utils/
+│       └── backups/
+│           ├── README.md
+│           ├── 快速备份.py
+│           └── 一键备份.sh
+├── database/
+│   ├── README.md
 │   └── .gitkeep
-└── external/                # 外部集成与第三方工具
-    ├── prompts-library/     # 提示词库管理工具
-    ├── my-nvim/             # Neovim 配置
-    └── XHS-image-to-PDF-conversion/  # 小红书图片转 PDF
+└── external/
+    ├── README.md
+    ├── prompts-library/
+    ├── my-nvim/
+    ├── XHS-image-to-PDF-conversion/
+    └── .gitkeep
 ```
 
-## 各子目录详解
+## 子目录职责与边界
 
-### `common/` - 通用功能模块
+### `common/`：内部通用模块
 
-存放项目内部共享的通用代码：
+- 入口：[`common/README.md`](./common/README.md)
+- 只放 **可复用** 的基础能力：模型、工具函数、脚本等
+- 不要把业务逻辑、项目临时代码塞进来
+- 约定：新增/调整能力时，同步更新 `libs/common/README.md`
 
-- `models/` - 数据模型定义，如 Pydantic 模型、数据类等
-- `utils/` - 工具函数，如文件处理、格式转换等
-- `utils/backups/` - 备份相关工具函数
+### `database/`：数据库适配层（预留）
 
-### `database/` - 数据库模块（预留）
+- 入口：[`database/README.md`](./database/README.md)
+- 目标是把“存储细节”关进盒子里：连接、迁移、查询适配、事务边界
+- 约定：实现前先写清楚目录结构与边界（见 `libs/database/README.md`）
 
-预留的数据库适配层，用于未来扩展数据持久化功能。
+### `external/`：第三方工具与外部集成
 
-### `external/` - 外部集成
+- 入口：[`external/README.md`](./external/README.md)
+- 尽量保持第三方代码原样，避免“魔改后不可升级”
+- 每个工具目录至少包含：`README.md`（用途/入口/依赖）与许可证/来源说明
+- 约定：新增外部工具时，同步更新 `libs/external/README.md`
 
-#### `prompts-library/` - 提示词库管理工具
+## 常用入口
 
-Excel ↔ Markdown 提示词互转工具：
+- 提示词批量管理：[`external/prompts-library/`](./external/prompts-library/)（配合 `../prompts/` 使用）
+- 备份工具：优先使用仓库根目录的 `backups/`（当前与 `libs/common/utils/backups/` 内容一致）
 
-```bash
-cd libs/external/prompts-library
-pip install -r requirements.txt
-python main.py
-```
+## 贡献约定（最小要求）
 
-功能：
-- Excel 转 Markdown：批量将表格提示词转为 .md 文件
-- Markdown 转 Excel：将 .md 文件汇总到表格中
-- 支持分类、标签、版本管理
-
-#### `my-nvim/` - Neovim 配置
-
-个人 Neovim 配置，基于 LazyVim，包含：
-- LSP 配置
-- 代码补全
-- 文件导航
-- Git 集成
-
-#### `XHS-image-to-PDF-conversion/` - 小红书图片转 PDF
-
-将小红书图片合并为 PDF 的工具：
-
-```bash
-cd libs/external/XHS-image-to-PDF-conversion
-pip install -r requirements.txt
-python pdf.py
-```
-
-## 使用原则
-
-1. **分层边界**: `common/` 只放通用代码，业务逻辑放其他地方
-2. **单一职责**: 每个模块只做一件事
-3. **依赖记录**: 新增外部依赖时更新对应的 `requirements.txt`
-4. **文档同步**: 新增模块时更新本 README
-
-## 新增模块指南
-
-```bash
-# 新增通用模块
-mkdir -p libs/common/新模块名
-touch libs/common/新模块名/__init__.py
-
-# 新增外部集成
-mkdir -p libs/external/工具名
-echo "# 工具说明" > libs/external/工具名/README.md
-```
+1. 新增模块先定义职责边界，再写代码/文档
+2. 新增依赖记录安装方式与最低版本（必要时补充到 `documents/工具集.md`）
+3. 目录结构/职责变化时，更新对应 README，保证“文档即真相源”
