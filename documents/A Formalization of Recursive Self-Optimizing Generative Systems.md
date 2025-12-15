@@ -133,3 +133,32 @@ We presented a formal model of recursive self-optimizing generative systems and 
 * **Category suggestions**: `cs.LO`, `cs.AI`, or `math.CT`
 * **Length**: appropriate for extended abstract (≈3–4 pages LaTeX)
 * **Next extension**: fixed-point existence conditions, convergence theorems, or proof sketches
+
+---
+
+## 附录：高层次概念释义 (Appendix: High-Level Conceptual Explanation)
+
+该论文的核心思想可以被通俗地理解为一个能够**自我完善**的 AI 系统。其递归本质可分解为以下步骤：
+
+#### 1. 定义核心角色：
+
+*   **α-提示词 (生成器)**: 一个“母体”提示词，其唯一职责是**生成**其他提示词或技能。
+*   **Ω-提示词 (优化器)**: 另一个“母体”提示词，其唯一职责是**优化**其他提示词或技能。
+
+#### 2. 描述递归的生命周期：
+
+1.  **创生 (Bootstrap)**:
+    *   用 AI 生成 `α-提示词` 和 `Ω-提示词` 的初始版本 (v1)。
+
+2.  **自省与进化 (Self-Correction & Evolution)**:
+    *   用 `Ω-提示词 (v1)` 去**优化** `α-提示词 (v1)`，得到一个更强大的 `α-提示词 (v2)`。
+
+3.  **创造 (Generation)**:
+    *   用**进化后的** `α-提示词 (v2)` 去生成我们需要的**所有**目标提示词和技能。
+
+4.  **循环与飞跃 (Recursive Loop)**:
+    *   最关键的一步：将新生成的、更强大的产物（甚至包括新版本的 `Ω-提示词`）反馈给系统，再次用于优化 `α-提示词`，从而启动下一轮进化。
+
+#### 3. 终极目标：
+
+通过这个永不停止的**递归优化循环**，系统在每一次迭代中都进行**自我超越**，无限逼近我们设定的**理想状态**。
