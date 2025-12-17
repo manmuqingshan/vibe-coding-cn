@@ -9,6 +9,7 @@ i18n/zh/documents/
 ├── README.md
 │
 ├── 从零开始vibecoding/          # 🚀 新手入门必读
+│   ├── 00-Vibe Coding 哲学原理.md
 │   ├── 01-网络环境配置.md
 │   ├── 02-开发环境搭建.md
 │   └── 03-IDE配置.md
@@ -30,11 +31,14 @@ i18n/zh/documents/
 │   ├── 关于手机ssh任意位置链接本地计算机，基于frp实现的方法.md
 │   └── telegram-dev/
 │
-└── 模板与资源/
-    ├── 代码组织.md
-    ├── 工具集.md
-    ├── 编程书籍推荐.md
-    └── 通用项目架构模板.md
+├── 模板与资源/
+│   ├── 代码组织.md
+│   ├── 工具集.md
+│   ├── 编程书籍推荐.md
+│   └── 通用项目架构模板.md
+│
+└── 项目实战经验/
+    └── telegram-dev/
 ```
 
 ## 文档分类
@@ -43,13 +47,14 @@ i18n/zh/documents/
 
 完全零基础？从这里开始！
 
+*   [00-Vibe Coding 哲学原理](./从零开始vibecoding/00-Vibe%20Coding%20哲学原理.md) - 核心理念
 *   [01-网络环境配置](./从零开始vibecoding/01-网络环境配置.md) - 配置网络访问
 *   [02-开发环境搭建](./从零开始vibecoding/02-开发环境搭建.md) - 搭建开发环境（提示词版）
-*   [03-IDE配置](./从零开始vibecoding/03-IDE配置.md) - 配置 VS Code 编辑器
+*   [03-IDE配置](./从零开始vibecoding/03-IDE配置.md) - 配置 VS Code / Cursor / Windsurf
 
 ### 方法论与原则
 
-此类别存放关于编程思想、开发哲学和项目核心原则的文档。
+关于编程思想、开发哲学和项目核心原则的文档。
 
 *   `A Formalization of Recursive Self-Optimizing Generative Systems.md`
 *   `gluecoding.md`
@@ -62,7 +67,7 @@ i18n/zh/documents/
 
 ### 教程与指南
 
-此类别存放具体工具的配置、使用指南和操作教程。
+具体工具的配置、使用指南和操作教程。
 
 *   `auggie-mcp配置文档.md`
 *   `LazyVim快捷键大全.md`
@@ -72,21 +77,20 @@ i18n/zh/documents/
 
 ### 模板与资源
 
-此类别存放可复用的项目模板、代码结构规范和资源列表。
+可复用的项目模板、代码结构规范和资源列表。
 
 *   `代码组织.md`
 *   `工具集.md`
 *   `编程书籍推荐.md`
 *   `通用项目架构模板.md`
 
-## 贡献新文档
+### 项目实战经验
 
-1.  将文档放置在最合适的分类目录中。
-2.  如果需要，可以创建新的分类目录。
-3.  更新本 README 文件以反映变更。
+实际项目开发中的经验总结和案例。
+
+*   `telegram-dev/` - Telegram Bot 开发经验
 
 ## 相关资源
 
 - [提示词库](../prompts/) - AI 提示词集合
 - [技能库](../skills/) - AI Skills 技能
-- [通用库](../libs/) - 工具与外部集成
