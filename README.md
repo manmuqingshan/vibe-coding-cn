@@ -67,6 +67,7 @@
   <a href="https://docs.google.com/spreadsheets/d/1ngoQOhJqdguwNAilCl1joNwTje7FWWN9WiI2bo5VhpU/edit?gid=2093180351#gid=2093180351&range=A1"><img src="https://img.shields.io/badge/提示词-在线表格(推荐)-blue?style=for-the-badge" alt="提示词在线表格（推荐）"></a>
   <a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools"><img src="https://img.shields.io/badge/系统提示词-仓库-slateblue?style=for-the-badge" alt="系统提示词仓库"></a>
   <a href="./i18n/zh/documents/从零开始vibecoding/"><img src="https://img.shields.io/badge/🚀_从零开始-新手入门-red?style=for-the-badge" alt="从零开始"></a>
+  <a href="./i18n/zh/documents/实战案例/"><img src="https://img.shields.io/badge/🎬_实战案例-项目实操-orange?style=for-the-badge" alt="实战案例"></a>
   <a href="./i18n/zh/documents/外部资源聚合/"><img src="https://img.shields.io/badge/📡_信息源-聚合-teal?style=for-the-badge" alt="信息源聚合"></a>
 </p>
 
@@ -85,6 +86,34 @@
 ## 🎲 前言
 
 **这是一个不断生长和自我否定的项目，当下的一切经验和能力都可能因 AI 能力的进化而失去意义，所以请时刻保持以 AI 为主的思维，不要固步自封，所有的经验都可能失效，辩证的看🙏🙏🙏**
+
+---
+
+## ⚡ 5 分钟快速开始
+
+> 已有网络和开发环境？直接开始 Vibe Coding！
+
+**第 1 步**：复制下面的提示词，粘贴到 [Claude](https://claude.ai/) 或 [ChatGPT](https://chatgpt.com/)
+
+```
+你是一个专业的 AI 编程助手。我想用 Vibe Coding 的方式开发一个项目。
+
+请先问我：
+1. 你想做什么项目？（一句话描述）
+2. 你熟悉什么编程语言？（不熟悉也没关系）
+3. 你的操作系统是什么？
+
+然后帮我：
+1. 推荐最简单的技术栈
+2. 生成项目结构
+3. 一步步指导我完成开发
+
+要求：每完成一步问我是否成功，再继续下一步。
+```
+
+**第 2 步**：跟着 AI 的指导，把想法变成现实 🚀
+
+**就这么简单！** 更多进阶内容请继续阅读 👇
 
 
 ---
