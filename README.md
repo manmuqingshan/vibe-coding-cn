@@ -137,7 +137,7 @@
 <details open>
 <summary><strong>🧬 胶水编程 (Glue Coding)</strong></summary>
 
-> **软件工程的圣杯与银弹——终于出现了。**
+> **软件工程的圣杯与银弹**
 
 胶水编程是 Vibe Coding 的终极进化形态，可能完美解决三大致命缺陷：
 
