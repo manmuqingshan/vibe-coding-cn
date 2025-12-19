@@ -223,6 +223,13 @@
 <details>
 <summary><strong>🐙 GitHub Featured Repositories</strong></summary>
 
+### GitHub Discovery
+
+| Resource | Link | Description |
+|:---|:---|:---|
+| GitHub Topics | [github.com/topics](https://github.com/topics) | Browse repositories by topic |
+| GitHub Trending | [github.com/trending](https://github.com/trending) | Trending repositories |
+
 ### CLI Tools
 
 | Repository | Link | Description |
